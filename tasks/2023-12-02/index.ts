@@ -1,20 +1,31 @@
 export class ChristmasQueue<Gift> {
-  queue: { item: Gift; priority: number; order: number }[];
-  orderCounter: number;
+  queue: { item: Gift; priority: number }[];
 
   constructor() {
     this.queue = [];
-    this.orderCounter = 0;
+  }
+
+  #setQueue(queue: { item: Gift; priority: number }[]) {
+    this.queue = queue;
   }
 
   enqueue(item: Gift, priority: number): void {
-    this.queue.push({ item, priority, order: this.orderCounter++ });
-    this.queue.sort((a, b) => {
-      if (a.priority === b.priority) {
-        return a.order - b.order;
-      }
-      return b.priority - a.priority;
-    });
+    const itemsWithHigherPriority = this.queue.filter(
+      (queueItem) => queueItem.priority > priority
+    );
+    const itemsWithSamePriority = this.queue.filter(
+      (queueItem) => queueItem.priority === priority
+    );
+    const itemsWithLowerPriority = this.queue.filter(
+      (queueItem) => queueItem.priority < priority
+    );
+
+    this.#setQueue([
+      ...itemsWithHigherPriority,
+      ...itemsWithSamePriority,
+      { item, priority },
+      ...itemsWithLowerPriority,
+    ]);
   }
 
   dequeue(): Gift {
