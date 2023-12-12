@@ -23,8 +23,8 @@ export function findShortestPath(
   const citiesInCurrentPath = new Set<string>();
 
   const findPaths = (startNode: string, endNode: string) => {
-    if (citiesInCurrentPath.has(endNode)) {
-      paths.push([...citiesInCurrentPath]);
+    if (startNode === endNode) {
+      paths.push([...citiesInCurrentPath, endNode]);
       return;
     }
     if (citiesInCurrentPath.has(startNode)) {
@@ -38,8 +38,6 @@ export function findShortestPath(
   };
 
   findPaths(startNode, endNode);
-
-  console.log(paths);
 
   if (paths.length === 0) {
     return null;
