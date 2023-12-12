@@ -33,9 +33,6 @@ export class LengthStrategy implements SortingStrategy {
 export class LetterSorter {
   constructor(private strategy: SortingStrategy) {}
   sortLetters(letters: Letter[]): Letter[] {
-    const soretedLetters = letters.slice().sort(this.strategy.compare);
-    console.log(soretedLetters);
-
-    return soretedLetters;
+    return letters.slice().sort(this.strategy.compare);
   }
 }
